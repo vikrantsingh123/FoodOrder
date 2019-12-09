@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Rectangle extends StatefulWidget {
+  int num;
+  Rectangle(this.num);
   @override
   _RectangleState createState() => _RectangleState();
 }
@@ -55,12 +57,10 @@ class _RectangleState extends State<Rectangle>
       //   _angle = 0;
       // }
       // _angle = 1;
-      print('_angle $_angle');
     });
   }
 
   _endDrag(DragEndDetails details) async {
-    print('end drag $myAnimationStatus');
     try {
       setState(() {
         startAnim = true;
@@ -70,9 +70,6 @@ class _RectangleState extends State<Rectangle>
       await animationController.forward(from: 0.0).orCancel;
     } on TickerCanceled {}
 
-    animation.removeListener(() {
-      setState(() {});
-    });
     setState(() {
       startAnim = false;
       _angle = 0;
@@ -87,7 +84,6 @@ class _RectangleState extends State<Rectangle>
     double _animationAngle;
 
     if (startAnim) {
-      print('got');
       _animationAngle = animation.value;
     } else {
       _animationAngle = _angle;
@@ -95,19 +91,27 @@ class _RectangleState extends State<Rectangle>
 
     return Center(
         child: GestureDetector(
-            onHorizontalDragStart: _startDrag,
-            onHorizontalDragUpdate: _updateDrag,
-            onHorizontalDragEnd: _endDrag,
-            child: Container(
-              height: screenHeight / 4,
-              width: screenWidth / 3,
-              child: Transform.rotate(
-                angle: _animationAngle,
-                child: Card(
-                  color: Colors.green,
-                ),
-              ),
-            )));
+      onHorizontalDragStart: _startDrag,
+      onHorizontalDragUpdate: _updateDrag,
+      onHorizontalDragEnd: _endDrag,
+      child: Container(
+        height: screenHeight / 2,
+        width: screenWidth / 1.3,
+        child: Transform.rotate(
+          angle: _animationAngle,
+          child: Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0)),
+            elevation: 5,
+            // child: Text(
+            //   widget.num.toString(),
+            //   style: TextStyle(color: Colors.black, fontSize: 20),
+            // ),
+            color: Colors.green,
+          ),
+        ),
+      ),
+    ));
   }
 
   @override
