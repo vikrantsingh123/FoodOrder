@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:test1/rectangle.dart';
+import 'package:test1/model/hangingObj.dart';
 import 'dart:math';
+import 'package:test1/widgets/HangingItem/hangingItem.dart';
 
-class RectangleList extends StatefulWidget {
+class HangingList extends StatefulWidget {
   @override
-  _RectangleListState createState() => _RectangleListState();
+  _HangingListState createState() => _HangingListState();
 }
 
-class _RectangleListState extends State<RectangleList>
+class _HangingListState extends State<HangingList>
     with SingleTickerProviderStateMixin {
   double _angle = 0;
   AnimationController animationController;
@@ -26,7 +27,7 @@ class _RectangleListState extends State<RectangleList>
       });
 
     animationController =
-        AnimationController(duration: Duration(milliseconds: 1000), vsync: this)
+        AnimationController(duration: Duration(milliseconds: 1500), vsync: this)
           ..addListener(() {});
   }
 
@@ -85,7 +86,7 @@ class _RectangleListState extends State<RectangleList>
       },
       child: PageView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: 6,
+          itemCount: list.length,
           controller: _pageController,
           itemBuilder: (context, index) {
             if (endAnim) {
@@ -97,7 +98,7 @@ class _RectangleListState extends State<RectangleList>
                 angle: _angle,
                 child: Padding(
                     padding: EdgeInsets.fromLTRB(60, 20, 60, 20),
-                    child: Rectangle(index))
+                    child: HangingItem(list[index]))
                 // Center(
                 //     child: Padding(
                 //         padding: EdgeInsets.all(20),
@@ -119,4 +120,12 @@ class _RectangleListState extends State<RectangleList>
     animationController.dispose();
     super.dispose();
   }
+
+  List<HangingObject> list = [
+    HangingObject('Chicken', 'chicken', Image.asset('../../Image/p1.jpg')),
+    HangingObject('Burger', 'burger', Image.asset('../../Image/p1.jpg')),
+    HangingObject('Pizza', 'pizza', Image.asset('../../Image/p1.jpg')),
+    HangingObject('Fries', 'fries', Image.asset('../../Image/p1.jpg')),
+    HangingObject('Coke', 'coke', Image.asset('../../Image/p1.jpg')),
+  ];
 }
