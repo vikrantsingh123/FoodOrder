@@ -4,5 +4,6 @@ class HangingObject {
   String title;
   String subTitle;
   Image image;
-  HangingObject(this.title, this.subTitle, this.image);
+  String description;
+  HangingObject(this.title, this.subTitle, this.image, this.description);
 }

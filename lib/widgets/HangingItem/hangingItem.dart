@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:test1/model/hangingObj.dart';
+import 'package:test1/screens/cardPage/cardPage.dart';
+import 'package:test1/widgets/HangingItem/hangTransform.dart';
 
 class HangingItem extends StatefulWidget {
   HangingObject hangingItem;
@@ -10,23 +12,71 @@ class HangingItem extends StatefulWidget {
   _HangingItemState createState() => _HangingItemState();
 }
 
+typedef void BoolCallback(bool isFront);
+
 class _HangingItemState extends State<HangingItem>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   AnimationController animationController;
+  AnimationController _flipController;
+
+  Animation<double> _frontScale;
+  Animation<double> _backScale;
+
   Animation<double> animation;
-  _GuillotineAnimationStatus myAnimationStatus;
+
   double _angle = 0;
   Offset _start, _end;
-  bool startAnim = false;
-
+  bool startAnim = false, isFront = true;
+  Widget front, back;
+  VoidCallback onFlip;
+  BoolCallback onFlipDone;
+  bool flipOnTouch;
+  double screenWidth;
+  double screenHeight;
   @override
   void initState() {
     super.initState();
-    myAnimationStatus = _GuillotineAnimationStatus.closed;
 
     animationController =
         AnimationController(duration: Duration(milliseconds: 1000), vsync: this)
           ..addListener(() {});
+    _flipController = new AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+
+    _frontScale = TweenSequence(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween(begin: 0.0, end: pi / 2)
+              .chain(CurveTween(curve: Curves.easeIn)),
+          weight: 50.0,
+        ),
+        TweenSequenceItem<double>(
+          tween: ConstantTween<double>(pi / 2),
+          weight: 50.0,
+        ),
+      ],
+    ).animate(_flipController);
+    _backScale = TweenSequence(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: ConstantTween<double>(pi / 2),
+          weight: 50.0,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween(begin: -pi / 2, end: 0.0)
+              .chain(CurveTween(curve: Curves.easeOut)),
+          weight: 50.0,
+        ),
+      ],
+    ).animate(_flipController);
+    _flipController.addStatusListener((status) {
+      if (status == AnimationStatus.completed ||
+          status == AnimationStatus.dismissed) {
+        if (onFlipDone != null) onFlipDone(isFront);
+      }
+    });
   }
 
   void initialiseAnimationAngle() {
@@ -68,89 +118,130 @@ class _HangingItemState extends State<HangingItem>
       });
       initialiseAnimationAngle();
 
-      await animationController.forward(from: 0.0).orCancel;
+      animationController.forward(from: 0.0).orCancel.then((value) {
+        setState(() {
+          startAnim = false;
+          _angle = 0;
+        });
+      });
     } on TickerCanceled {}
+  }
+
+  _openCard() {
+    // setState(() {
+    //   // _flipController.forward(from: 0.0).orCancel.then((value) {
+    //   //   _flipController.reverse().orCancel;
+    //   // });
+    //   setState(() {
+    //     if (_flipController.isCompleted || _flipController.velocity > 0) {
+    //       // flipCard = false;
+    //       _flipController.reverse();
+    //     } else {
+    //       // flipCard = true;
+    //       _flipController.forward();
+    //     }
+    //   });
+    // });
+    print('opencard called');
+    if (onFlip != null) {
+      onFlip();
+    }
+    if (isFront) {
+      print('forwardyo');
+      _flipController.forward();
+    } else {
+      print('reverseyo');
+      _flipController.reverse();
+    }
 
     setState(() {
-      startAnim = false;
-      _angle = 0;
+      isFront = !isFront;
     });
+
+    // Navigator.push(context, CardPageRoute());
   }
 
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    double screenWidth = mediaQueryData.size.width;
-    double screenHeight = mediaQueryData.size.height;
+    screenWidth = mediaQueryData.size.width;
+    screenHeight = mediaQueryData.size.height;
     double _animationAngle;
+    // Animation<double> flipScale;
 
     if (startAnim) {
       _animationAngle = animation.value;
     } else {
       _animationAngle = _angle;
     }
+    // if (flipCard) {
+    //   flipScale = _frontScale;
+    // } else {
+    //   flipScale = _backScale;
+    // }
 
     return Center(
-        child: GestureDetector(
-      onHorizontalDragStart: _startDrag,
-      onHorizontalDragUpdate: _updateDrag,
-      onHorizontalDragEnd: _endDrag,
-      child: Container(
-        height: screenHeight / 2,
-        width: screenWidth / 1.3,
-        child: Transform.rotate(
-          angle: _animationAngle,
+      child: GestureDetector(
+          onHorizontalDragStart: _startDrag,
+          onHorizontalDragUpdate: _updateDrag,
+          onHorizontalDragEnd: _endDrag,
+          onTap: _openCard,
+          child: Stack(
+            fit: StackFit.passthrough,
+            children: <Widget>[
+              _buildContent(isUpSide: true, animationAngle: _animationAngle),
+              _buildContent(isUpSide: false, animationAngle: _animationAngle)
+            ],
+          )),
+    );
+  }
 
-          child: Container(
-              decoration: BoxDecoration(
-                // color: Colors.yellow,
-                borderRadius: BorderRadius.circular(20.0),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 20.0,
-                      offset: Offset(20.0, 20.0))
-                ],
-                gradient: LinearGradient(
-                  colors: [Color(0xfffff9c4), Color(0xfffffde7)],
-                  begin: FractionalOffset(1.0, 1.0),
-                  end: FractionalOffset(1.7, 0.0),
-                  stops: [0.0, 1.0],
-                ),
-              ),
-              child: Column(
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      widget.hangingItem.title,
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(widget.hangingItem.title),
-                  ),
-                  Image(
-                    image: AssetImage('assets/Image/p1.jpg'),
-                  )
-                ],
-              )),
-
-          // child: Text(
-          //   widget.num.toString(),
-          //   style: TextStyle(color: Colors.black, fontSize: 20),
-          // ),
-        ),
-      ),
-    ));
+  Widget _buildContent({@required bool isUpSide, double animationAngle}) {
+    print('isUpside $isUpSide');
+    return
+        // IgnorePointer(
+        //   ignoring: isUpSide ? !isFront : isFront,child:
+        AnimationCard(
+            animation: isUpSide ? _frontScale : _backScale,
+            child1: isUpSide
+                ? widget.hangingItem
+                : Text('widget.hangingItem.description'),
+            height: screenHeight,
+            width: screenWidth,
+            animationAngle: animationAngle
+            // ),
+            );
   }
 
   @override
   void dispose() {
     animationController.dispose();
+    _flipController.dispose();
     super.dispose();
   }
 }
 
-enum _GuillotineAnimationStatus { closed, open, animating }
+class AnimationCard extends StatelessWidget {
+  final Widget child1;
+  final Animation<double> animation;
+  final double height, width, animationAngle;
+  AnimationCard(
+      {this.animation,
+      this.child1,
+      this.height,
+      this.width,
+      this.animationAngle});
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (BuildContext context, Widget child) {
+        final Matrix4 transform = new Matrix4.identity()
+          ..setEntry(3, 2, 0.001)
+          ..rotateY(animation.value);
+
+        return HangTransform(transform, height, width, animationAngle, child1);
+      },
+    );
+  }
+}
