@@ -42,7 +42,7 @@ class _HangingItemState extends State<HangingItem>
           ..addListener(() {});
     _flipController = new AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 800),
     );
 
     _frontScale = TweenSequence(
@@ -128,35 +128,25 @@ class _HangingItemState extends State<HangingItem>
   }
 
   _openCard() {
-    // setState(() {
-    //   // _flipController.forward(from: 0.0).orCancel.then((value) {
-    //   //   _flipController.reverse().orCancel;
-    //   // });
-    //   setState(() {
-    //     if (_flipController.isCompleted || _flipController.velocity > 0) {
-    //       // flipCard = false;
-    //       _flipController.reverse();
-    //     } else {
-    //       // flipCard = true;
-    //       _flipController.forward();
-    //     }
-    //   });
-    // });
     print('opencard called');
     if (onFlip != null) {
       onFlip();
     }
     if (isFront) {
       print('forwardyo');
-      _flipController.forward();
+      _flipController.forward(from: 0.0).orCancel.then((onValue) {
+        setState(() {
+          isFront = !isFront;
+        });
+      });
     } else {
       print('reverseyo');
-      _flipController.reverse();
+      _flipController.reverse().orCancel.then((onValue) {
+        setState(() {
+          isFront = !isFront;
+        });
+      });
     }
-
-    setState(() {
-      isFront = !isFront;
-    });
 
     // Navigator.push(context, CardPageRoute());
   }
@@ -175,7 +165,7 @@ class _HangingItemState extends State<HangingItem>
       _animationAngle = _angle;
     }
     // if (flipCard) {
-    //   flipScale = _frontScale;
+    //   flipScale = _frontScale
     // } else {
     //   flipScale = _backScale;
     // }
@@ -197,20 +187,16 @@ class _HangingItemState extends State<HangingItem>
   }
 
   Widget _buildContent({@required bool isUpSide, double animationAngle}) {
-    print('isUpside $isUpSide');
-    return
-        // IgnorePointer(
-        //   ignoring: isUpSide ? !isFront : isFront,child:
-        AnimationCard(
-            animation: isUpSide ? _frontScale : _backScale,
-            child1: isUpSide
-                ? widget.hangingItem
-                : Text('widget.hangingItem.description'),
-            height: screenHeight,
-            width: screenWidth,
-            animationAngle: animationAngle
-            // ),
-            );
+    return IgnorePointer(
+      ignoring: isUpSide ? !isFront : isFront,
+      child: AnimationCard(
+          animation: isUpSide ? _frontScale : _backScale,
+          child1: widget.hangingItem,
+          height: screenHeight,
+          width: screenWidth,
+          animationAngle: animationAngle,
+          isUpside: isUpSide),
+    );
   }
 
   @override
@@ -222,15 +208,17 @@ class _HangingItemState extends State<HangingItem>
 }
 
 class AnimationCard extends StatelessWidget {
-  final Widget child1;
+  final HangingObject child1;
   final Animation<double> animation;
   final double height, width, animationAngle;
+  final bool isUpside;
   AnimationCard(
       {this.animation,
       this.child1,
       this.height,
       this.width,
-      this.animationAngle});
+      this.animationAngle,
+      this.isUpside});
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -240,7 +228,8 @@ class AnimationCard extends StatelessWidget {
           ..setEntry(3, 2, 0.001)
           ..rotateY(animation.value);
 
-        return HangTransform(transform, height, width, animationAngle, child1);
+        return HangTransform(
+            transform, height, width, animationAngle, child1, isUpside);
       },
     );
   }
