@@ -98,17 +98,7 @@ class _HangingListState extends State<HangingList>
                 angle: _angle,
                 child: Padding(
                     padding: EdgeInsets.fromLTRB(60, 20, 60, 20),
-                    child: HangingItem(list[index]))
-                // Center(
-                //     child: Padding(
-                //         padding: EdgeInsets.all(20),
-                //         child: Container(
-                //           padding: EdgeInsets.all(200),
-                //           height: 100,
-                //           width: 100,
-                //           color: Colors.red,
-                //         )))
-                );
+                    child: HangingItem(list[index])));
           }),
     )
         // )
@@ -122,15 +112,65 @@ class _HangingListState extends State<HangingList>
   }
 
   List<HangingObject> list = [
-    HangingObject('Chicken', 'chicken', Image.asset('../../Image/p1.jpg'),
-        'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using , making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for  will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).'),
-    HangingObject('Burger', 'burger', Image.asset('../../Image/p1.jpg'),
-        'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using , making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for  will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).'),
-    HangingObject('Pizza', 'pizza', Image.asset('../../Image/p1.jpg'),
-        'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using , making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for  will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).'),
-    HangingObject('Fries', 'fries', Image.asset('../../Image/p1.jpg'),
-        'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using , making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for  will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).'),
-    HangingObject('Coke', 'coke', Image.asset('../../Image/p1.jpg'),
-        'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using , making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for  will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).'),
+    HangingObject(
+        'Chicken',
+        'assets/Image/mcDonald.png',
+        'chicken',
+        Image.asset('../../Image/p1.jpg'),
+        'McDonald`s',
+        ['Chicken McNuggets', 'Big Mac', 'Fries'],
+        'Fusion Mall,2ndStage, Kormangala'),
+    HangingObject(
+        'Burger',
+        'assets/Image/tacoBell.png',
+        'burger',
+        Image.asset('assets/Image/p1.jpg'),
+        'Taco Bell',
+        ['Doritos Locos Tacos', 'Freezes', 'Nacho Fries', 'The Meximelt'],
+        'Ashwini Complex, Indranagar'),
+    HangingObject(
+        'Pizza',
+        'assets/Image/kfc.png',
+        'pizza',
+        Image.asset('../../../assets/Image/p1.jpg'),
+        'KFC',
+        [
+          'Boneless Wings',
+          'Extra Crispy Strips',
+          'Extra Crispy Chicken',
+          'Hot Wings'
+        ],
+        'BDA Complex HSR'),
+    HangingObject(
+        'Fries',
+        'assets/Image/burgerKing.png',
+        'fries',
+        Image.asset('../../../assets/Image/p1.jpg'),
+        'Burger King',
+        ['Whopper Jr. Sandwich', 'HamBurger', 'Veggie Burger', 'TENDERGRILL'],
+        'Bull Temple Road, Basavanagudi'),
+    HangingObject(
+        'Coke',
+        'assets/Image/subway.jpg',
+        'coke',
+        Image.asset(
+          '../../Image/p1.jpg',
+        ),
+        'Subway',
+        [
+          'Rotisserie-Style Chicken',
+          'Veggie Delite',
+          'Meatball Marinara',
+          'Meatball Marinara'
+        ],
+        'Fusion Mall,2ndStage, Kormangala'),
+    HangingObject(
+        'Sandwich',
+        'assets/Image/starBucks.png',
+        'sandwich',
+        Image.asset('../../Image/p1.jpg'),
+        'StarBucks',
+        ['Cake pops', 'Pumpkin bread, Greek yogurt, Bacon'],
+        'Orion East, Banaswadi')
   ];
 }

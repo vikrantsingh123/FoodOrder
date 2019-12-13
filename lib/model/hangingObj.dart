@@ -4,6 +4,11 @@ class HangingObject {
   String title;
   String subTitle;
   Image image;
+  String logo;
   String description;
-  HangingObject(this.title, this.subTitle, this.image, this.description);
+  String restaurantName;
+  List<String> dishes;
+  String location;
+  HangingObject(this.title, this.logo, this.subTitle, this.image,
+      this.restaurantName, this.dishes, this.location);
 }

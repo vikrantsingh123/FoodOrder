@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -68,35 +66,75 @@ import 'package:flutter/material.dart';
 //     );
 //   }
 // }
-class CardPageRoute extends CupertinoPageRoute {
-  // CardPageRoute() : super(builder: (BuildContext context) => CardPage());
+// class CardPageRoute extends CupertinoPageRoute {
+//   CardPageRoute() : super(builder: (BuildContext context) => CardPage());
 
-  // OPTIONAL IF YOU WISH TO HAVE SOME EXTRA ANIMATION WHILE ROUTING
-  @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
-    return FadeTransition(
-      opacity: animation,
-      child: CardPage(),
-    );
-  }
-}
+//   // OPTIONAL IF YOU WISH TO HAVE SOME EXTRA ANIMATION WHILE ROUTING
+//   @override
+//   Widget buildPage(BuildContext context, Animation<double> animation,
+//       Animation<double> secondaryAnimation) {
+//     return CardPage();
+//   }
+// }
 
-class CardPage extends StatefulWidget {
-  @override
-  _CardPageState createState() => _CardPageState();
-}
+class CardPageRoute extends StatelessWidget {
+//   @override
+//   _CardPageState createState() => _CardPageState();
+// }
 
-class _CardPageState extends State<CardPage> {
+// class _CardPageState extends State<CardPage> {
+  final String logoAsset;
+  CardPageRoute({this.logoAsset});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Second Page'),
-      ),
-      body: Center(
-        child: Text('This is the second page'),
+    var decoratedBox = new DecoratedBox(
+      decoration: new BoxDecoration(
+        image: new DecorationImage(
+          fit: BoxFit.cover,
+          image: new AssetImage(logoAsset),
+        ),
+        shape: BoxShape.rectangle,
       ),
     );
+
+    var hero = new Hero(
+      tag: 'tastyBurger',
+      child: decoratedBox,
+    );
+
+    List<Widget> stackChildren = <Widget>[
+      new Positioned.fill(child: hero),
+    ];
+
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          new SliverAppBar(
+            flexibleSpace: new FlexibleSpaceBar(
+              title: Text('TASTYBURGER'),
+              background: new Stack(
+                children: stackChildren,
+              ),
+            ),
+            pinned: true,
+            // Extruding edge from the sliver appbar, may need to fix expanded height
+            expandedHeight: MediaQuery.of(context).size.height / 2.5,
+            backgroundColor: Colors.white,
+          ),
+          new SliverFillRemaining(
+            child: new Container(color: Colors.white),
+          )
+        ],
+      ),
+    );
+
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text('Second Page'),
+    //   ),
+    //   body: Center(
+    //     child: Text('This is the second page'),
+    //   ),
+    // );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test1/screens/HangingList/hangingList.dart';
 
 void main() => runApp(MaterialApp(
-      title: 'Navigation Basics',
+      title: 'TASTYBURGER',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.yellow),
       home: MyStateWidget(),
@@ -13,48 +13,23 @@ class MyStateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
-          'HangingList',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.brown),
+          'TASTYBURGER',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+          textAlign: TextAlign.center,
         ),
+        actions: <Widget>[
+          Icon(Icons.fastfood),
+          Padding(
+            padding: EdgeInsets.all(5),
+          )
+        ],
       ),
       body: HangingList(),
-      // drawer: Drawer(
-      //   child: ListView(
-      //     padding: EdgeInsets.zero,
-      //     children: <Widget>[
-      //       DrawerHeader(
-      //         child: Text('Drawer Header'),
-      //         decoration: BoxDecoration(
-      //           color: Colors.blue,
-      //         ),
-      //       ),
-      //       ListTile(
-      //         title: Text('HangingItem '),
-      //         onTap: () {
-      //           Navigator.push(context,
-      //               MaterialPageRoute(builder: (context) => RectangleList()));
-
-      //           // Update the state of the app
-      //           // ...
-      //           // Then close the drawer
-      //           // Navigator.pop(context);
-      //         },
-      //       ),
-      //       ListTile(
-      //         title: Text('Hanging List'),
-      //         onTap: () {
-      //           Navigator.push(context,
-      //               MaterialPageRoute(builder: (context) => RectangleList()));
-      //           // Update the state of the app
-      //           // ...
-      //           // Then close the drawer
-      //           // Navigator.pop(context);
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

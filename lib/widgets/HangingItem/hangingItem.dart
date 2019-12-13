@@ -5,6 +5,8 @@ import 'package:test1/model/hangingObj.dart';
 import 'package:test1/screens/cardPage/cardPage.dart';
 import 'package:test1/widgets/HangingItem/hangTransform.dart';
 
+import 'animationCard.dart';
+
 class HangingItem extends StatefulWidget {
   HangingObject hangingItem;
   HangingItem(this.hangingItem);
@@ -151,24 +153,24 @@ class _HangingItemState extends State<HangingItem>
     // Navigator.push(context, CardPageRoute());
   }
 
+  _navigateCard() {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            CardPageRoute(logoAsset: widget.hangingItem.logo)));
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     screenWidth = mediaQueryData.size.width;
     screenHeight = mediaQueryData.size.height;
     double _animationAngle;
-    // Animation<double> flipScale;
 
     if (startAnim) {
       _animationAngle = animation.value;
     } else {
       _animationAngle = _angle;
     }
-    // if (flipCard) {
-    //   flipScale = _frontScale
-    // } else {
-    //   flipScale = _backScale;
-    // }
 
     return Center(
       child: GestureDetector(
@@ -176,6 +178,7 @@ class _HangingItemState extends State<HangingItem>
           onHorizontalDragUpdate: _updateDrag,
           onHorizontalDragEnd: _endDrag,
           onTap: _openCard,
+          onDoubleTap: _navigateCard,
           child: Stack(
             fit: StackFit.passthrough,
             children: <Widget>[
@@ -191,7 +194,7 @@ class _HangingItemState extends State<HangingItem>
       ignoring: isUpSide ? !isFront : isFront,
       child: AnimationCard(
           animation: isUpSide ? _frontScale : _backScale,
-          child1: widget.hangingItem,
+          hangingObject: widget.hangingItem,
           height: screenHeight,
           width: screenWidth,
           animationAngle: animationAngle,
@@ -204,33 +207,5 @@ class _HangingItemState extends State<HangingItem>
     animationController.dispose();
     _flipController.dispose();
     super.dispose();
-  }
-}
-
-class AnimationCard extends StatelessWidget {
-  final HangingObject child1;
-  final Animation<double> animation;
-  final double height, width, animationAngle;
-  final bool isUpside;
-  AnimationCard(
-      {this.animation,
-      this.child1,
-      this.height,
-      this.width,
-      this.animationAngle,
-      this.isUpside});
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: animation,
-      builder: (BuildContext context, Widget child) {
-        final Matrix4 transform = new Matrix4.identity()
-          ..setEntry(3, 2, 0.001)
-          ..rotateY(animation.value);
-
-        return HangTransform(
-            transform, height, width, animationAngle, child1, isUpside);
-      },
-    );
   }
 }
