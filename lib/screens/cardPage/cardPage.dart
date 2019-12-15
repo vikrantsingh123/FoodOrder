@@ -1,97 +1,49 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// class CardPageRoute extends ModalRoute<void> {
-//   @override
-//   Duration get transitionDuration => Duration(milliseconds: 100);
-
-//   @override
-//   bool get opaque => false;
-
-//   @override
-//   bool get barrierDismissible => false;
-
-//   @override
-//   Color get barrierColor => Colors.black.withOpacity(0.5);
-
-//   @override
-//   String get barrierLabel => null;
-
-//   @override
-//   bool get maintainState => true;
-//   @override
-//   Widget buildPage(
-//     BuildContext context,
-//     Animation<double> animation,
-//     Animation<double> secondaryAnimation,
-//   ) {
-//     // This makes sure that text and other content follows the material style
-//     return Material(
-//       type: MaterialType.transparency,
-//       // make sure that the overlay content is not cut off
-//       child: SafeArea(
-//         child: _buildOverlayContent(context),
-//       ),
-//     );
-//   }
-
-//   Widget _buildOverlayContent(BuildContext context) {
-//     return Center(
-//       child: Column(
-//         mainAxisSize: MainAxisSize.min,
-//         children: <Widget>[
-//           Text(
-//             'This is a nice overlay',
-//             style: TextStyle(color: Colors.white, fontSize: 30.0),
-//           ),
-//           RaisedButton(
-//             onPressed: () => Navigator.pop(context),
-//             child: Text('Dismiss'),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-
-//   @override
-//   Widget buildTransitions(BuildContext context, Animation<double> animation,
-//       Animation<double> secondaryAnimation, Widget child) {
-//     // You can add your own animations for the overlay content
-//     return FadeTransition(
-//       opacity: animation,
-//       child: ScaleTransition(
-//         scale: animation,
-//         child: child,
-//       ),
-//     );
-//   }
-// }
-// class CardPageRoute extends CupertinoPageRoute {
-//   CardPageRoute() : super(builder: (BuildContext context) => CardPage());
-
-//   // OPTIONAL IF YOU WISH TO HAVE SOME EXTRA ANIMATION WHILE ROUTING
-//   @override
-//   Widget buildPage(BuildContext context, Animation<double> animation,
-//       Animation<double> secondaryAnimation) {
-//     return CardPage();
-//   }
-// }
-
-class CardPageRoute extends StatelessWidget {
-//   @override
-//   _CardPageState createState() => _CardPageState();
-// }
-
-// class _CardPageState extends State<CardPage> {
+class CardPageRoute extends StatefulWidget {
   final String logoAsset;
   CardPageRoute({this.logoAsset});
+  @override
+  _CardPageState createState() => _CardPageState();
+}
+
+class _CardPageState extends State<CardPageRoute> {
+  ScrollController _scrollController;
+  bool lastStatus = true;
+  _scrollListener() {
+    if (isShrink != lastStatus) {
+      setState(() {
+        lastStatus = isShrink;
+      });
+    }
+  }
+
+  bool get isShrink {
+    return _scrollController.hasClients &&
+        _scrollController.offset > (200 - kToolbarHeight);
+  }
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var decoratedBox = new DecoratedBox(
       decoration: new BoxDecoration(
         image: new DecorationImage(
           fit: BoxFit.cover,
-          image: new AssetImage(logoAsset),
+          image: new AssetImage(widget.logoAsset),
         ),
         shape: BoxShape.rectangle,
       ),
@@ -108,6 +60,7 @@ class CardPageRoute extends StatelessWidget {
 
     return Scaffold(
       body: CustomScrollView(
+        controller: _scrollController,
         slivers: [
           new SliverAppBar(
             flexibleSpace: new FlexibleSpaceBar(
@@ -117,24 +70,128 @@ class CardPageRoute extends StatelessWidget {
               ),
             ),
             pinned: true,
+
             // Extruding edge from the sliver appbar, may need to fix expanded height
             expandedHeight: MediaQuery.of(context).size.height / 2.5,
-            backgroundColor: Colors.white,
+            backgroundColor: isShrink ? Colors.yellow : Colors.white,
           ),
           new SliverFillRemaining(
-            child: new Container(color: Colors.white),
+            hasScrollBody: false,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Ingredients',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          "\$ 3.75",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                        )
+                      ],
+                    )),
+                Container(
+                    width: double.infinity,
+                    child: ListView.separated(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: 5,
+                      itemBuilder: (BuildContext context, int i) {
+                        return Container(
+                            color: Color(0xfffff9c4),
+                            margin: EdgeInsets.all(10),
+                            child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Container(
+                                      margin: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border:
+                                              Border.all(color: Colors.brown)),
+                                      child: Image.asset(
+                                        'assets/Image/fastFood.png',
+                                        height: 100,
+                                        width: 100,
+                                      )),
+                                  Column(
+                                    children: <Widget>[
+                                      Text('Cabbage'),
+                                      Text('\$0.3')
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          SizedBox(
+                                            width: 50,
+                                            child: RaisedButton(
+                                              color: Colors.grey[300],
+                                              onPressed: () {},
+                                              child: Text('-'),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text('7'),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          SizedBox(
+                                            width: 50,
+                                            child: RaisedButton(
+                                              color: Colors.grey[300],
+                                              onPressed: () {},
+                                              child: Text('+'),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  )
+                                ]));
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Divider(
+                              color: Colors.black,
+                            ));
+                      },
+                    )),
+                Container(
+                  margin: EdgeInsets.all(20),
+                  width: double.infinity,
+                  child: RaisedButton(
+                    onPressed: () {},
+                    child: Text('Add to Cart'),
+                    color: Colors.yellow,
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),
     );
-
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text('Second Page'),
-    //   ),
-    //   body: Center(
-    //     child: Text('This is the second page'),
-    //   ),
-    // );
   }
 }

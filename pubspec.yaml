@@ -19,7 +19,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sensors: ^0.4.1+1
+  # sensors: ^0.4.1+1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -49,6 +49,15 @@ flutter:
     - assets/Image/starBucks.png
     - assets/Image/subway.jpg
     - assets/Image/tacoBell.png
+    - assets/Image/Rectangle.png
+    - assets/Image/fastFood.png
+    - assets/Image/mcFries.png
+    - assets/Image/iceCream.png
+    - assets/Image/softDrink.png
+    - assets/Image/hotDog.png
+    - assets/Image/cake.png
+    - assets/Image/burger.png
+    - assets/Image/milkshake.png
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

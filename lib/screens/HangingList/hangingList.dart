@@ -116,23 +116,25 @@ class _HangingListState extends State<HangingList>
         'Chicken',
         'assets/Image/mcDonald.png',
         'chicken',
-        Image.asset('../../Image/p1.jpg'),
+        'assets/Image/mcFries.png',
         'McDonald`s',
         ['Chicken McNuggets', 'Big Mac', 'Fries'],
-        'Fusion Mall,2ndStage, Kormangala'),
+        'Fusion Mall,2ndStage, Kormangala',
+        '1860 210 0000, 080 3399 4444'),
     HangingObject(
         'Burger',
         'assets/Image/tacoBell.png',
         'burger',
-        Image.asset('assets/Image/p1.jpg'),
+        'assets/Image/milkshake.png',
         'Taco Bell',
         ['Doritos Locos Tacos', 'Freezes', 'Nacho Fries', 'The Meximelt'],
-        'Ashwini Complex, Indranagar'),
+        'Ashwini Complex, Indranagar',
+        '1860 210 0000, 080 3399 4444'),
     HangingObject(
         'Pizza',
         'assets/Image/kfc.png',
         'pizza',
-        Image.asset('../../../assets/Image/p1.jpg'),
+        'assets/Image/hotDog.png',
         'KFC',
         [
           'Boneless Wings',
@@ -140,22 +142,22 @@ class _HangingListState extends State<HangingList>
           'Extra Crispy Chicken',
           'Hot Wings'
         ],
-        'BDA Complex HSR'),
+        'BDA Complex HSR',
+        '1860 210 0000, 080 3399 4444'),
     HangingObject(
         'Fries',
         'assets/Image/burgerKing.png',
         'fries',
-        Image.asset('../../../assets/Image/p1.jpg'),
+        'assets/Image/burger.png',
         'Burger King',
         ['Whopper Jr. Sandwich', 'HamBurger', 'Veggie Burger', 'TENDERGRILL'],
-        'Bull Temple Road, Basavanagudi'),
+        'Bull Temple Road, Basavanagudi',
+        '1860 210 0000, 080 3399 4444'),
     HangingObject(
         'Coke',
         'assets/Image/subway.jpg',
         'coke',
-        Image.asset(
-          '../../Image/p1.jpg',
-        ),
+        'assets/Image/cake.png',
         'Subway',
         [
           'Rotisserie-Style Chicken',
@@ -163,14 +165,16 @@ class _HangingListState extends State<HangingList>
           'Meatball Marinara',
           'Meatball Marinara'
         ],
-        'Fusion Mall,2ndStage, Kormangala'),
+        'Fusion Mall,2ndStage, Kormangala',
+        '1860 210 0000, 080 3399 4444'),
     HangingObject(
         'Sandwich',
         'assets/Image/starBucks.png',
         'sandwich',
-        Image.asset('../../Image/p1.jpg'),
+        'assets/Image/softDrink.png',
         'StarBucks',
         ['Cake pops', 'Pumpkin bread, Greek yogurt, Bacon'],
-        'Orion East, Banaswadi')
+        'Orion East, Banaswadi',
+        '1860 210 0000, 080 3399 4444')
   ];
 }
