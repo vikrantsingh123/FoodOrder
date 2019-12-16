@@ -1,16 +1,8 @@
 # Food Order
 
-A new Flutter project.
+A Flutter application where whe have list of restaurants as `HangingList` with animation on scrolling. Here we also have `HangingItems` which you can rotate like a hanger and you can also play with their flip property.
+The idea is taken from hanging clothes in almirah.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Go to project directory and run `flutter run`.
