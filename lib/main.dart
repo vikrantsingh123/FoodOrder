@@ -53,7 +53,7 @@ class MyStateWidget extends StatelessWidget {
           frontSide: frontSide,
           backSide: backSide,
           moveList: true,
-          moveListItem: true,
+          moveListItem: false,
           height: screenHeight / 1.7,
           width: screenWidth / 1.3,
         ),
@@ -66,6 +66,7 @@ class MyStateWidget extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.all(10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Align(
               alignment: Alignment.center,
@@ -123,47 +124,53 @@ class MyStateWidget extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text('Dishes:',
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.brown,
-                    fontWeight: FontWeight.w600)),
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: obj.dishes.length,
-            itemBuilder: (BuildContext context, int i) {
-              return Text(obj.dishes[i], style: TextStyle(fontSize: 16));
-            },
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text('Location:',
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.brown,
-                    fontWeight: FontWeight.w600)),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(obj.location),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text('Contact:',
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.brown,
-                    fontWeight: FontWeight.w600)),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(obj.contact),
+          Container(
+            height: screenHeight / 4,
+            child: ListView(
+              physics: ScrollPhysics(),
+              shrinkWrap: true,
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Dishes:',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.brown,
+                          fontWeight: FontWeight.w600)),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(obj.dishes, style: TextStyle(fontSize: 16)),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Location:',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.brown,
+                          fontWeight: FontWeight.w600)),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(obj.location),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Contact:',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.brown,
+                          fontWeight: FontWeight.w600)),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(obj.contact),
+                ),
+              ],
+            ),
           ),
           SizedBox(
             height: 10,
@@ -193,7 +200,7 @@ class MyStateWidget extends StatelessWidget {
         'chicken',
         'assets/Image/mcFries.png',
         'McDonald`s',
-        ['Chicken McNuggets', 'Big Mac', 'Fries'],
+        'Chicken McNuggets\nBig Mac\nFries',
         'Fusion Mall,2ndStage, Kormangala',
         '1860 210 0000, 080 3399 4444'),
     HangingObject(
@@ -202,7 +209,7 @@ class MyStateWidget extends StatelessWidget {
         'burger',
         'assets/Image/milkshake.png',
         'Taco Bell',
-        ['Doritos Locos Tacos', 'Freezes', 'Nacho Fries', 'The Meximelt'],
+        'Doritos Locos Tacos\nFreezes\nNacho Fries\nThe Meximelt',
         'Ashwini Complex, Indranagar',
         '1860 210 0000, 080 3399 4444'),
     HangingObject(
@@ -211,12 +218,7 @@ class MyStateWidget extends StatelessWidget {
         'pizza',
         'assets/Image/hotDog.png',
         'KFC',
-        [
-          'Boneless Wings',
-          'Extra Crispy Strips',
-          'Extra Crispy Chicken',
-          'Hot Wings'
-        ],
+        'Boneless Wings\nExtra Crispy Strips\nExtra Crispy Chicken\nHot Wings',
         'BDA Complex HSR',
         '1860 210 0000, 080 3399 4444'),
     HangingObject(
@@ -225,7 +227,7 @@ class MyStateWidget extends StatelessWidget {
         'fries',
         'assets/Image/burger.png',
         'Burger King',
-        ['Whopper Jr. Sandwich', 'HamBurger', 'Veggie Burger', 'TENDERGRILL'],
+        'Whopper Jr. Sandwich\nHamBurger\nVeggie Burger\nTENDERGRILL',
         'Bull Temple Road, Basavanagudi',
         '1860 210 0000, 080 3399 4444'),
     HangingObject(
@@ -234,12 +236,7 @@ class MyStateWidget extends StatelessWidget {
         'coke',
         'assets/Image/cake.png',
         'Subway',
-        [
-          'Rotisserie-Style Chicken',
-          'Veggie Delite',
-          'Meatball Marinara',
-          'Meatball Marinara'
-        ],
+        'Rotisserie-Style Chicken\nVeggie Delite\nMeatball Marinara\nMeatball Marinara',
         'Fusion Mall,2ndStage, Kormangala',
         '1860 210 0000, 080 3399 4444'),
     HangingObject(
@@ -248,7 +245,7 @@ class MyStateWidget extends StatelessWidget {
         'sandwich',
         'assets/Image/softDrink.png',
         'StarBucks',
-        ['Cake pops', 'Pumpkin bread, Greek yogurt, Bacon'],
+        'Cake pops\nPumpkin bread\nGreek yogurt\nBacon',
         'Orion East, Banaswadi',
         '1860 210 0000, 080 3399 4444')
   ];

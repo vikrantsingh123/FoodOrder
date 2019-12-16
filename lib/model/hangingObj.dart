@@ -7,7 +7,7 @@ class HangingObject {
   String logo;
   String description;
   String restaurantName;
-  List<String> dishes;
+  String dishes;
   String location;
   String contact;
   HangingObject(this.title, this.logo, this.subTitle, this.dishImage,
