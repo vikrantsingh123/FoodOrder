@@ -36,27 +36,14 @@ class MyStateWidget extends StatelessWidget {
           )
         ],
       ),
-      body: Container(
-        // decoration: BoxDecoration(
-        //     gradient: LinearGradient(
-        //   colors: [Colors.black26, Colors.black45, Colors.black54],
-        //   begin: FractionalOffset(1.0, 1.0),
-        //   end: FractionalOffset(1.7, 0.0),
-        //   stops: [
-        //     0.0,
-        //     0.5,
-        //     1.0,
-        //   ],
-        // )),
-        child: HangingList(
-          list: list,
-          frontSide: frontSide,
-          backSide: backSide,
-          moveList: true,
-          moveListItem: false,
-          height: screenHeight / 1.7,
-          width: screenWidth / 1.3,
-        ),
+      body: HangingList(
+        list: list,
+        frontSide: frontSide,
+        backSide: backSide,
+        moveList: true,
+        moveListItem: true,
+        height: screenHeight / 1.8,
+        width: screenWidth / 1.3,
       ),
     );
   }
@@ -75,10 +62,6 @@ class MyStateWidget extends StatelessWidget {
                 style: TextStyle(fontSize: 30, color: Color(0xffb71c1c)),
               ),
             ),
-            // Align(
-            //   alignment: Alignment.center,
-            //   child: Text(obj.restaurantName),
-            // ),
             SizedBox(
               height: 10,
             ),
@@ -105,6 +88,7 @@ class MyStateWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Align(
             alignment: Alignment.center,
@@ -125,7 +109,7 @@ class MyStateWidget extends StatelessWidget {
             height: 10,
           ),
           Container(
-            height: screenHeight / 4,
+            height: screenHeight / 5,
             child: ListView(
               physics: ScrollPhysics(),
               shrinkWrap: true,
