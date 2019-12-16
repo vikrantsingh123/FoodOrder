@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CardPageRoute extends StatefulWidget {
   final String logoAsset;
-  CardPageRoute({this.logoAsset});
+  CardPageRoute(this.logoAsset);
   @override
   _CardPageState createState() => _CardPageState();
 }
